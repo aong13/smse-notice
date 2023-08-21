@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -28,6 +29,17 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false); //기존 title 제거
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         toolbar_title.setText("회원가입");
+
+
+        TextView signup_next_Button=(TextView) findViewById(R.id.signup_next_btn);
+        signup_next_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent nextIntent = new Intent(RegisterActivity.this, RegisterActivity2.class);
+                startActivity(nextIntent);
+            }
+        });
+
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
