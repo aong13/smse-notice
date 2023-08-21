@@ -1,7 +1,6 @@
 package com.example.smse_notice;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,12 +13,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        TextView signupButton=(TextView) findViewById(R.id.signUp);
+        TextView signupButton=(TextView) findViewById(R.id.signupbtn);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent signupIntent = new Intent(LoginActivity.this, RegisterActivity.class);
-
+                startActivity(signupIntent);
             }
         });
 
