@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         toolbar_title.setText("회원가입");
 
-
+        //다음 버튼
         TextView signup_next_Button=(TextView) findViewById(R.id.signup_next_btn);
         signup_next_Button.setOnClickListener(new View.OnClickListener() {
             @Override
