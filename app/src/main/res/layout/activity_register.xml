@@ -55,15 +55,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="학생증 인증하기 UI/기능구현"
-                android:textSize="20dp"
-                android:gravity="center"
+                android:text="가입을 위해 학생증 인증이 필요합니다."
+                android:textSize="18dp"
+                ></TextView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/card"></ImageView>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="#B5B5B5"></TextView>
+                android:backgroundTint="#737373"
+                android:text="학생증 찰영하기"
+                app:icon="@android:drawable/ic_menu_camera"
+                app:iconSize="25dp" />
 
         </LinearLayout>
 
