@@ -1,12 +1,14 @@
-package com.example.smse_notice;
+package com.example.smse_notice.ui;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.smse_notice.R;
+
 public class RegisterActivity extends AppCompatActivity {
     TextView toolbar_title;
     @Override

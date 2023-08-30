@@ -1,4 +1,4 @@
-package com.example.smse_notice;
+package com.example.smse_notice.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.smse_notice.R;
 
 public class RegisterActivity2 extends AppCompatActivity {
 
