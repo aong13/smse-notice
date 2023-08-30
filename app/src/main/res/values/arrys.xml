@@ -16,7 +16,7 @@
         <item>12월</item>
     </string-array>
 
-    <integer-array name="grade">
+    <integer-array  name="grade">
         <item>1</item>
         <item>2</item>
         <item>3</item>
