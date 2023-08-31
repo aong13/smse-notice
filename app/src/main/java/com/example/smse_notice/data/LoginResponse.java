@@ -3,24 +3,24 @@ package com.example.smse_notice.data;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
-    @SerializedName("code")
-    private int code;
+//    @SerializedName("code")
+//    private int code;
 
-    @SerializedName("message")
-    private String message;
+    @SerializedName("result")
+    private String result;
 
-    @SerializedName("userId")
-    private int userId;
+//    @SerializedName("userId")
+//    private int userId;
 
-    public int getCode() {
-        return code;
+//    public int getCode() {
+//        return code;
+//    }
+
+    public String getResult() {
+        return result;
     }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
+//
+//    public int getUserId() {
+//        return userId;
+//    }
 }

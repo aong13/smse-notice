@@ -3,14 +3,14 @@ package com.example.smse_notice.data;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginData {
-    @SerializedName("userId")
-    String userId;
+    @SerializedName("loginId")
+    String loginId;
 
-    @SerializedName("userPwd")
-    String userPwd;
+    @SerializedName("loginPwd")
+    String loginPwd;
 
-    public LoginData(String userId, String userPwd) {
-        this.userId = userId;
-        this.userPwd = userPwd;
+    public LoginData(String loginId, String loginPwd) {
+        this.loginId = loginId;
+        this.loginPwd = loginPwd;
     }
 }
