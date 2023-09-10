@@ -5,20 +5,20 @@ import com.google.gson.annotations.SerializedName;
 public class LoginResponse {
 //    @SerializedName("code")
 //    private int code;
-    private String result;
 
-//    @SerializedName("userId")
-//    private int userId;
+
+//    private String response;
+
+    @SerializedName("loginId")
+    private String loginId;
 
 //    public int getCode() {
 //        return code;
 //    }
 
-    public String getResult() {
-        return result;
+//    public String getResponse() {return response;}
+
+    public String getResponse() {
+        return loginId;
     }
-//
-//    public int getUserId() {
-//        return userId;
-//    }
 }
