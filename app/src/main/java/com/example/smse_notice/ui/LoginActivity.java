@@ -65,8 +65,8 @@ public class LoginActivity extends AppCompatActivity {
 
         loginBtn.setOnClickListener(view -> {
             attemptLogin();
-            Intent loginIntent = new Intent(this, MainActivity.class);
             if (check == Boolean.TRUE) {
+                Intent loginIntent = new Intent(this, MainActivity.class);
                 startActivity(loginIntent);
                 check = Boolean.FALSE;
             }
@@ -86,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 Log.e("서버응답코드", String.valueOf(response.code()));
+                Log.e("헤더", String.valueOf(response.headers()));
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
@@ -108,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "이상하다.", Toast.LENGTH_SHORT).show();
                 }
             }
-
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {

@@ -83,6 +83,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="전화번호"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/phone_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="010-1234-5678"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="학년"
                 android:textSize="18sp"
                 android:textStyle="bold"></TextView>
@@ -142,9 +156,8 @@
                     ></ImageButton>
 
             </LinearLayout>
-
-
         </LinearLayout>
+
 
         <Button
             android:id="@+id/doneBtn_signup"
