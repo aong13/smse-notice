@@ -5,16 +5,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.smse_notice.R;
 
 public class RegisterActivity extends AppCompatActivity {
     TextView toolbar_title;
+    public static EditText mUserName, mStudentNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        mUserName = findViewById(R.id.name_signup);
+        mStudentNumber = findViewById(R.id.studentNum_signup);
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
