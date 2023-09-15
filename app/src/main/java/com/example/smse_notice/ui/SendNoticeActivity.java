@@ -27,7 +27,6 @@ public class SendNoticeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false); //기존 title 제거
         toolbar_title = findViewById(R.id.toolbar_title);
         toolbar_title.setText("공지 작성");
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -37,5 +36,4 @@ public class SendNoticeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
