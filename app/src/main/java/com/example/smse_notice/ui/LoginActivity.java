@@ -1,6 +1,8 @@
 package com.example.smse_notice.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,8 +65,8 @@ public class LoginActivity extends AppCompatActivity {
 
         loginBtn.setOnClickListener(view -> {
             attemptLogin();
-            Intent loginIntent = new Intent(this, MainActivity.class);
             if (check == Boolean.TRUE) {
+                Intent loginIntent = new Intent(this, MainActivity.class);
                 startActivity(loginIntent);
                 check = Boolean.FALSE;
             }
@@ -78,17 +80,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startLogin(LoginData data) {
-        service.userLogin(data).enqueue(new Callback<LoginResponse>() {
+        Call<LoginResponse> call = service.userLogin(data);
+        call.enqueue(new Callback<LoginResponse>() {
 
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                Log.e("서버응답코드", String.valueOf(response.code()));
+                Log.e("헤더", String.valueOf(response.headers()));
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
-                        String result = loginResponse.getResult();
-                        if ("success".equals(result)) {
+                        String result = loginResponse.getResponse();
+                        Log.e("응답값",result);
+                        Log.e("입력값", mUserId.getText().toString());
+                        if (mUserId.getText().toString().equals(result)) {
                             // 로그인 성공 처리
-                            Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, result + " 로그인 성공!야여여", Toast.LENGTH_SHORT).show();
                             check = Boolean.TRUE;
                         } else {
                             // 로그인 실패 처리
@@ -99,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 } else {
                     // 응답이 성공적이지 않은 경우 처리
+                    Toast.makeText(LoginActivity.this, "이상하다.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -107,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 // 네트워크 오류 등의 실패 처리
                 Toast.makeText(LoginActivity.this, "로그인 에러 발생", Toast.LENGTH_SHORT).show();
                 Log.e("로그인 에러 발생", t.getMessage());
-                t.printStackTrace(); // 에러 발생시 에러 발생 원인 단계별로 출력해줌
+                t.getMessage();
                 //showProgress(false);
             }
         });

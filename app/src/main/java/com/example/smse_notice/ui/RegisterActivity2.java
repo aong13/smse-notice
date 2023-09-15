@@ -42,7 +42,6 @@ public class RegisterActivity2 extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         //뒤로가기 버튼
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
