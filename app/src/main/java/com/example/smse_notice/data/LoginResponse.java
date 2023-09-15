@@ -21,4 +21,8 @@ public class LoginResponse {
     public String getResponse() {
         return loginId;
     }
+
+//    public int getUserId() {
+//        return userId;
+//    }
 }
