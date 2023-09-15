@@ -17,6 +17,7 @@ public class LoginResponse {
     public String getResult() {
         return result;
     }
+
 //
 //    public int getUserId() {
 //        return userId;
