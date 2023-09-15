@@ -14,11 +14,10 @@ public class LoginResponse {
 //        return code;
 //    }
 
-    public String getResult() {
+    public String getResponse() {
         return result;
     }
 
-//
 //    public int getUserId() {
 //        return userId;
 //    }

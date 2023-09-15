@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
-                        String result = loginResponse.getResult();
+                        String result = loginResponse.getResponse();
                         Log.e("응답값",result);
                         Log.e("입력값", mUserId.getText().toString());
                         if (mUserId.getText().toString().equals(result)) {
