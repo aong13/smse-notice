@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.smse_notice.R;
@@ -27,6 +28,14 @@ public class SendNoticeActivity extends AppCompatActivity {
         toolbar_title = findViewById(R.id.toolbar_title);
         toolbar_title.setText("공지 작성");
 
-
     }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
