@@ -47,7 +47,7 @@
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/Group_338"></ImageButton>
+                        android:background="@drawable/group_338"></ImageButton>
 
                     <TextView
                         android:layout_width="90dp"
@@ -67,7 +67,7 @@
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/Group_338"></ImageButton>
+                        android:background="@drawable/group_338"></ImageButton>
 
                     <TextView
                         android:layout_width="90dp"
@@ -87,7 +87,7 @@
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/Group_338"></ImageButton>
+                        android:background="@drawable/group_338"></ImageButton>
 
                     <TextView
                         android:layout_width="90dp"
@@ -107,7 +107,7 @@
                         android:layout_width="90dp"
                         android:layout_height="90dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/Group_338"></ImageButton>
+                        android:background="@drawable/group_338"></ImageButton>
 
                     <TextView
                         android:layout_width="90dp"
