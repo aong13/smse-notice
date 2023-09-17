@@ -10,8 +10,8 @@ public class JoinResponse {
         @SerializedName("userName")
         private String userName;
 
-    @SerializedName("userEmail")
-    private String userEmail;
+        @SerializedName("userEmail")
+        private String userEmail;
 
         public int getUserId() {
             return userId;
