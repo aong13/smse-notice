@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -18,12 +17,15 @@
         android:theme="@style/Theme.SMSE_NOTICE"
         tools:targetApi="31">
         <activity
+            android:name=".ui.joinClubActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ChannelActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity android:name=".ui.RegisterActivity2" />
         <activity
             android:name=".ui.RegisterActivity"

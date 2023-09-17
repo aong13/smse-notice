@@ -41,4 +41,10 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="cs_discription">IT 벤처 동아리</string>
+    <string name="cs">C.S\'</string>
+    <string name="page">페이지</string>
+    <string name="delete_join">신청 취소</string>
+    <string name="join_club">가입 신청</string>
+    <string name="withdraw_club">가입 탈퇴</string>
 </resources>
