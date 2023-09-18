@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.example.smse_notice.R;
 import com.example.smse_notice.data.LoginData;
 import com.example.smse_notice.data.LoginResponse;
+import com.example.smse_notice.data.User;
+import com.example.smse_notice.data.UserDataSingleton;
 import com.example.smse_notice.network.RetrofitClient;
 import com.example.smse_notice.network.ServiceApi;
 
@@ -26,24 +28,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-
     EditText loginId, loginPwd;
     TextView signupBtn, findIdBtn, findPwdBtn;
     Button loginBtn;
     private ServiceApi service;
 
-    Boolean check = Boolean.FALSE;
-    private EditText mUserId, mUserPwd;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
-        //기입항목 - 아이디, 비밀번호
-//        loginId = findViewById(R.id.loginID);
-//        loginPwd = findViewById(R.id.loginPWD);
 
         //버튼
         findIdBtn = findViewById(R.id.findIdBtn);
@@ -51,31 +44,29 @@ public class LoginActivity extends AppCompatActivity {
         signupBtn = findViewById(R.id.signupBtn);
         loginBtn = findViewById(R.id.loginbtn);
 
-        service = RetrofitClient.getClient().create(ServiceApi.class);
+        loginId = findViewById(R.id.loginID);
+        loginPwd = findViewById(R.id.loginPWD);
+
+        service = RetrofitClient.getClient().create(ServiceApi.class); //토큰 활용해서 서비스 구현
 
 
-        mUserId = (EditText) findViewById(R.id.loginID);
-        mUserPwd = (EditText) findViewById(R.id.loginPWD);
-
-        //화면이동
+        //회원가입 버튼 클릭 이벤트 처리
         signupBtn.setOnClickListener(view -> {
             Intent signupIntent = new Intent(this, RegisterActivity.class);
             startActivity(signupIntent);
         });
 
+        //로그인 버튼 클릭 이벤트 처리
         loginBtn.setOnClickListener(view -> {
             attemptLogin();
-            if (check == Boolean.TRUE) {
-                Intent loginIntent = new Intent(this, MainActivity.class);
-                startActivity(loginIntent);
-                check = Boolean.FALSE;
-            }
         });
     }
 
+
     private void attemptLogin() {
-        String id = mUserId.getText().toString();
-        String pwd = mUserPwd.getText().toString();
+        // 사용자가 입력한 아이디와 비밀번호를 가져옴
+        String id = loginId.getText().toString();
+        String pwd = loginPwd.getText().toString();
         startLogin(new LoginData(id, pwd));
     }
 
@@ -91,14 +82,24 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
                         String result = loginResponse.getResponse();
+                        //로그 확인
                         Log.e("응답값",result);
-                        Log.e("입력값", mUserId.getText().toString());
-                        if (mUserId.getText().toString().equals(result)) {
+                        Log.e("입력값", loginId.getText().toString());
+                        if (loginId.getText().toString().equals(result)) {
                             // 로그인 성공 처리
+
+                            // UserDataSingleton에 유저 정보를 저장
+                            requestUserInfo();
+
+                            // 로그인 성공 시 MainActivity로 이동
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+
                             Toast.makeText(LoginActivity.this, result + " 로그인 성공!야여여", Toast.LENGTH_SHORT).show();
-                            check = Boolean.TRUE;
                         } else {
                             // 로그인 실패 처리
+//                            Toast.makeText(LoginActivity.this, "로그인 실패: " + result, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // 응답 바디가 null인 경우 처리
@@ -106,7 +107,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 } else {
                     // 응답이 성공적이지 않은 경우 처리
-                    Toast.makeText(LoginActivity.this, "이상하다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "서버 에러: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Log.e("로그인 에러", "서버 에러: " + response.code());
                 }
             }
 
@@ -116,9 +118,33 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "로그인 에러 발생", Toast.LENGTH_SHORT).show();
                 Log.e("로그인 에러 발생", t.getMessage());
                 t.getMessage();
-                //showProgress(false);
             }
         });
 
+    }
+
+    private void requestUserInfo() {
+        Call<User> call = service.getUserInfo(); // service는 RetrofitClient.getClient().create(ServiceApi.class); 로 초기화된 것으로 가정합니다.
+
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    User user = response.body();
+                    // 사용자 정보(user)를 활용할 수 있습니다.
+                    UserDataSingleton.getInstance().setUserInfo(user);
+                    // UserDataSingleton에 유저 정보를 저장
+                    UserDataSingleton.getInstance().setUserInfo(user);
+
+                } else {
+                    // 요청 실패 처리
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                // 네트워크 오류 또는 예외 처리
+            }
+        });
     }
 }

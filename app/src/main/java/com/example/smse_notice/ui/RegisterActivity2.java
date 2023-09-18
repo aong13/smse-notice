@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.smse_notice.R;
 import com.example.smse_notice.data.JoinData;
 import com.example.smse_notice.data.JoinResponse;
+import com.example.smse_notice.data.UserDataSingleton;
 import com.example.smse_notice.network.RetrofitClient;
 import com.example.smse_notice.network.ServiceApi;
 

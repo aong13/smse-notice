@@ -19,7 +19,6 @@ public interface ServiceApi {
     @POST("/signin")
     Call<JoinResponse> userJoin(@Body JoinData data);
 
-    @GET("user/{userId}")
-    Call<User> getUserInfo(@Path("userId") int userId);
-
+    @GET("/user/info")
+    Call<User> getUserInfo();
 }
