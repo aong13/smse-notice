@@ -81,11 +81,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
-                        String result = loginResponse.getResponse();
+                        String responseLoginId = loginResponse.getLoginId();
                         //로그 확인
-                        Log.e("응답값",result);
+                        Log.e("응답값",responseLoginId);
                         Log.e("입력값", loginId.getText().toString());
-                        if (loginId.getText().toString().equals(result)) {
+                        if (loginId.getText().toString().equals(responseLoginId)) {
                             // 로그인 성공 처리
 
                             // UserDataSingleton에 유저 정보를 저장
@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
 
-                            Toast.makeText(LoginActivity.this, result + " 로그인 성공!야여여", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, responseLoginId + " 로그인 성공!야여여", Toast.LENGTH_SHORT).show();
                         } else {
                             // 로그인 실패 처리
 //                            Toast.makeText(LoginActivity.this, "로그인 실패: " + result, Toast.LENGTH_SHORT).show();
@@ -133,12 +133,10 @@ public class LoginActivity extends AppCompatActivity {
                     User user = response.body();
                     // UserDataSingleton에 유저 정보를 저장
                     UserDataSingleton.getInstance().setUserInfo(user);
-
                 } else {
                     // 요청 실패 처리
                 }
             }
-
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 // 네트워크 오류 또는 예외 처리
