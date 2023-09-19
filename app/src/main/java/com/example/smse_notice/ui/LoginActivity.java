@@ -131,8 +131,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     User user = response.body();
-                    // 사용자 정보(user)를 활용할 수 있습니다.
-                    UserDataSingleton.getInstance().setUserInfo(user);
                     // UserDataSingleton에 유저 정보를 저장
                     UserDataSingleton.getInstance().setUserInfo(user);
 
