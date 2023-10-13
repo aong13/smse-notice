@@ -7,11 +7,11 @@ public class MessageData {
         private String title;
         @SerializedName("content")
         private String content;
-        @SerializedName("sender")
 
-        public void MessageData(String title, String tex) {
-            this.title = title;
-            this.content = content;
-        }
+    public MessageData(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
+
+}
 

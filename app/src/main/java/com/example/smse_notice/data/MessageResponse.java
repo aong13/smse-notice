@@ -10,4 +10,5 @@ public class MessageResponse {
     public int getChatId() {
         return chatId;
     }
+
 }

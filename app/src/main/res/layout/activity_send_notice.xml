@@ -86,11 +86,13 @@
       </LinearLayout>
 
       <EditText
+          android:id="@+id/sendNotice_title"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:hint="제목"/>
 
       <EditText
+          android:id="@+id/sendNotice_content"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:hint="내용"

@@ -105,7 +105,7 @@ public class RegisterActivity2 extends AppCompatActivity {
              }
         });
             //통신
-        service = RetrofitClient.getClient().create(ServiceApi.class);
+        service = RetrofitClient.getClient(this).create(ServiceApi.class);
 
         //회원가입 완료 버튼
         doneBtn_signup= findViewById(R.id.doneBtn_signup);
@@ -132,18 +132,6 @@ public class RegisterActivity2 extends AppCompatActivity {
                         year_signup.setText(String.valueOf(y));
                         month_signup.setText(String.valueOf(m+1));
                         date_signup.setText(String.valueOf(d));
-
-//
-//                        // 선택한 날짜를 'yyyy-MM-dd' 형식의 문자열로 변환합니다.
-//                        String selectedDateString = String.format(Locale.getDefault(), "%04d-%02d-%02d", y, m + 1,d);
-//
-//                        // 문자열을 Date 객체로 파싱합니다.
-//                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//                        try {
-//                            birthDate = dateFormat.parse(selectedDateString);
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(y, m, d);

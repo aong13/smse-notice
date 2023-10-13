@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +17,11 @@ import com.example.smse_notice.data.LoginData;
 import com.example.smse_notice.data.LoginResponse;
 import com.example.smse_notice.data.User;
 import com.example.smse_notice.data.UserDataSingleton;
-import com.example.smse_notice.network.RetrofitClient;
 import com.example.smse_notice.network.ServiceApi;
+import com.example.smse_notice.network.RetrofitClient;
 
-import java.io.IOException;
+import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         loginId = findViewById(R.id.loginID);
         loginPwd = findViewById(R.id.loginPWD);
 
-        service = RetrofitClient.getClient().create(ServiceApi.class); //토큰 활용해서 서비스 구현
+        service = RetrofitClient.getClient(this).create(ServiceApi.class);
 
 
         //회원가입 버튼 클릭 이벤트 처리
@@ -73,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
     private void startLogin(LoginData data) {
         Call<LoginResponse> call = service.userLogin(data);
         call.enqueue(new Callback<LoginResponse>() {
-
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 Log.e("서버응답코드", String.valueOf(response.code()));
@@ -86,7 +84,18 @@ public class LoginActivity extends AppCompatActivity {
                         Log.e("응답값",responseLoginId);
                         Log.e("입력값", loginId.getText().toString());
                         if (loginId.getText().toString().equals(responseLoginId)) {
-                            // 로그인 성공 처리
+
+                            // 로그인 성공 후 토큰을 SharedPreferences에 저장
+                            String authToken = null;
+                            String receivedToken = String.valueOf(response.headers().get("Authorization"));
+                            if (receivedToken != null && receivedToken.startsWith("Bearer ")) {
+                                authToken = receivedToken.substring(7); // "Bearer " 부분 제거
+                                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("authToken", authToken);
+                                editor.apply();
+                            }
+
 
                             // UserDataSingleton에 유저 정보를 저장
                             requestUserInfo();
@@ -99,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, responseLoginId + " 로그인 성공!야여여", Toast.LENGTH_SHORT).show();
                         } else {
                             // 로그인 실패 처리
-//                            Toast.makeText(LoginActivity.this, "로그인 실패: " + result, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // 응답 바디가 null인 경우 처리
@@ -120,26 +128,42 @@ public class LoginActivity extends AppCompatActivity {
                 t.getMessage();
             }
         });
-
     }
 
-    private void requestUserInfo() {
-        Call<User> call = service.getUserInfo(); // service는 RetrofitClient.getClient().create(ServiceApi.class); 로 초기화된 것으로 가정합니다.
 
-        call.enqueue(new Callback<User>() {
+    private void requestUserInfo() {
+
+        // SharedPreferences에서 토큰을 가져오기
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", null);
+
+        Call<List<User>> call = service.userInfo("Bearer " + authToken);
+        call.enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 if (response.isSuccessful()) {
-                    User user = response.body();
-                    // UserDataSingleton에 유저 정보를 저장
-                    UserDataSingleton.getInstance().setUserInfo(user);
+                    List<User> users = response.body();
+                    if (users != null && !users.isEmpty()) {
+                        // 여기서 users 리스트에 유저 정보가 포함됩니다.
+                        User userInfo = users.get(0); // 예를 들어, 첫 번째 유저 정보를 가져옴
+
+                        // UserDataSingleton에 유저 정보를 저장
+                        UserDataSingleton.getInstance().setUserInfo(userInfo);
+                        Log.d("UserInfo", "getCommunityId: " + userInfo.getCommunityId());
+
+                        // 파싱 및 처리
+                    } else {
+                        Log.e("Response", "응답 데이터가 null이거나 빈 리스트입니다.");
+                    }
                 } else {
-                    // 요청 실패 처리
+                    Log.e("Response", "서버 응답이 실패하였습니다. HTTP 코드: " + response.code());
                 }
             }
+
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<List<User>> call, Throwable t) {
                 // 네트워크 오류 또는 예외 처리
+                Log.e("정보 저장 에러 발생", t.getMessage());
             }
         });
     }
