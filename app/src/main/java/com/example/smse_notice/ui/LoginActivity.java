@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //로그인 버튼 클릭 이벤트 처리
         loginBtn.setOnClickListener(view -> {
-            attemptLogin();
+//            attemptLogin(); //테스트를 위해 주석처리
         });
     }
 
@@ -144,8 +144,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     List<User> users = response.body();
                     if (users != null && !users.isEmpty()) {
-                        // 여기서 users 리스트에 유저 정보가 포함됩니다.
-                        User userInfo = users.get(0); // 예를 들어, 첫 번째 유저 정보를 가져옴
+                        // 여기서 users 리스트에 유저 정보가 포함
+                        User userInfo = users.get(0); //첫 번째 유저 정보를 가져옴
 
                         // UserDataSingleton에 유저 정보를 저장
                         UserDataSingleton.getInstance().setUserInfo(userInfo);

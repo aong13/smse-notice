@@ -6,6 +6,7 @@ import com.example.smse_notice.data.LoginData;
 import com.example.smse_notice.data.LoginResponse;
 import com.example.smse_notice.data.MessageData;
 import com.example.smse_notice.data.MessageResponse;
+import com.example.smse_notice.data.NoticeData;
 import com.example.smse_notice.data.User;
 
 import java.util.List;
@@ -28,5 +29,8 @@ public interface ServiceApi {
     Call<List<User>> userInfo(@Header("Authorization") String token);
 
     @POST("/chat/{community-id}")
-    Call<MessageResponse> chat(@Path("community-id") int communityId ,@Header("Authorization") String token, @Body MessageData data);
+    Call<MessageResponse> chat(@Path("community-id") int communityId, @Header("Authorization") String token, @Body MessageData data);
+    @GET("/chat/{community-id}")
+    Call<List<NoticeData>> getNotice();
+
 }
