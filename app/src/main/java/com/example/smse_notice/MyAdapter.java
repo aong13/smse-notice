@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private List<NoticeData> noticeDataList;
+    private static List<NoticeData> noticeDataList;
 
     public MyAdapter(List<NoticeData> noticeDataList) {
         this.noticeDataList = noticeDataList;
@@ -53,4 +53,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             time = view.findViewById(R.id.time);
         }
     }
+
+    public void updateData(List<NoticeData> chatMessages) {
+        noticeDataList.clear(); // 데이터 초기화
+        noticeDataList.addAll(chatMessages); // 새로운 데이터로 업데이트
+        notifyDataSetChanged(); // RecyclerView에 데이터 변경 알림
+    }
+
+
 }

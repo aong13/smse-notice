@@ -5,16 +5,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.smse_notice.MyAdapter;
 import com.example.smse_notice.R;
 import com.example.smse_notice.data.NoticeData;
+import com.example.smse_notice.network.RetrofitClient;
 import com.example.smse_notice.network.ServiceApi;
 
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +34,14 @@ public class ChannelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel);
 
+        service = RetrofitClient.getClient(this).create(ServiceApi.class);
+
+        //recyclerview 초기화
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // 어댑터 초기화
+        MyAdapter adapter = new MyAdapter(new ArrayList<>()); // ArrayList 초기화
+        recyclerView.setAdapter(adapter);
 
         //툴바
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -47,13 +60,18 @@ public class ChannelActivity extends AppCompatActivity {
             startActivity(switchIntent);
         });
 
-        Call<List<NoticeData>> call = service.getNotice();
+        // SharedPreferences에서 토큰을 가져오기
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String authToken = sharedPreferences.getString("authToken", null);
+
+        //동적으로 바뀔수잇게해야함
+        Call<List<NoticeData>> call = service.getNotice(1, "Bearer " + authToken);
         call.enqueue(new Callback<List<NoticeData>>() {
             @Override
             public void onResponse(Call<List<NoticeData>> call, Response<List<NoticeData>> response) {
                 if (response.isSuccessful()) {
                     List<NoticeData> chatMessages = response.body();
-                    // chatMessages를 RecyclerView에 표시하거나 처리합니다.
+                    adapter.updateData(chatMessages); // 어댑터에서 데이터 업데이트
                 } else {
                     // 오류 처리
                 }
