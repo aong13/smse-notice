@@ -12,4 +12,14 @@ public class NoticeData {
         this.fileUrl = fileUrl;
         this.created = created;
     }
+
+    public String getName() {
+        return title;
+    }
+    public String getContent() {
+        return content;
+    }
+    public String getTime() {
+        return created;
+    }
 }
