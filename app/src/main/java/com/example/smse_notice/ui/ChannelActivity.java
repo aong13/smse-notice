@@ -9,9 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smse_notice.MyAdapter;
 import com.example.smse_notice.R;
@@ -73,12 +75,15 @@ public class ChannelActivity extends AppCompatActivity {
                     List<NoticeData> chatMessages = response.body();
                     adapter.updateData(chatMessages); // 어댑터에서 데이터 업데이트
                 } else {
-                    // 오류 처리
+                    Log.e("채널 에러", "서버 에러: " + response.code() + "/불러오지못함");
                 }
             }
             @Override
             public void onFailure(Call<List<NoticeData>> call, Throwable t) {
                 // 네트워크 오류 처리
+                Toast.makeText(ChannelActivity.this, "에러 발생", Toast.LENGTH_SHORT).show();
+                Log.e("에러 발생", t.getMessage());
+                t.getMessage();
             }
         });
 

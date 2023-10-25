@@ -1,7 +1,5 @@
 package com.example.smse_notice.ui;
 
-import static com.example.smse_notice.ui.RegisterActivity.mUserName;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -12,19 +10,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smse_notice.R;
-import com.example.smse_notice.data.JoinResponse;
-import com.example.smse_notice.data.LoginData;
 import com.example.smse_notice.data.MessageData;
 import com.example.smse_notice.data.MessageResponse;
-import com.example.smse_notice.data.User;
-import com.example.smse_notice.data.UserDataSingleton;
 import com.example.smse_notice.network.RetrofitClient;
 import com.example.smse_notice.network.ServiceApi;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,8 +32,8 @@ public class SendNoticeActivity extends AppCompatActivity {
     EditText mTitle, mContent;
     TextView toolbar_title;
     Button sendBtn;
-
-    String title, content;
+    CheckBox check1, check2, check3, check4;
+    String title, content, toGrade;
     private ServiceApi service;
 
     @Override
@@ -59,6 +57,11 @@ public class SendNoticeActivity extends AppCompatActivity {
         mContent = findViewById(R.id.sendNotice_content);
         sendBtn = findViewById(R.id.send_btn);
 
+        check1 = findViewById(R.id.check1);
+        check2 = findViewById(R.id.check2);
+        check3 = findViewById(R.id.check3);
+        check4 = findViewById(R.id.check4);
+
         //서비스
         service = RetrofitClient.getClient(this).create(ServiceApi.class);
 
@@ -66,7 +69,8 @@ public class SendNoticeActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(view -> {
             title = mTitle.getText().toString();
             content = mContent.getText().toString();
-            sendMessage(new MessageData(title, content));
+            toGrade = checkGrade();
+            sendMessage(new MessageData(title, content, toGrade));
         });
 
 
@@ -116,11 +120,30 @@ public class SendNoticeActivity extends AppCompatActivity {
             public void onFailure(Call<MessageResponse> call, Throwable t) {
                 // 네트워크 오류 등의 실패 처리
                 Toast.makeText(SendNoticeActivity.this, "전송 에러 발생", Toast.LENGTH_SHORT).show();
-                Log.e("전송 에러 발생", t.getMessage());
+                Log.e("전송 에러 발생", checkGrade());
                 t.getMessage();
 
             }
         });
 
+    }
+
+    private String checkGrade(){
+        List<Integer> selectedGrade = new ArrayList<>();
+
+        if (check1.isChecked()) {
+            selectedGrade.add(1);
+        } else{selectedGrade.remove(Integer.valueOf(1));}
+        if (check2.isChecked()) {
+            selectedGrade.add(2);
+        } else{selectedGrade.remove(Integer.valueOf(2));}
+        if (check3.isChecked()) {
+            selectedGrade.add(3);
+        } else{selectedGrade.remove(Integer.valueOf(3));}
+        if (check4.isChecked()) {
+            selectedGrade.add(4);
+        } else{selectedGrade.remove(Integer.valueOf(4));}
+
+        return selectedGrade.toString();
     }
 }

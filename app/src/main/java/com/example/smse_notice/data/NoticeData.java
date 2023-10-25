@@ -5,10 +5,9 @@ public class NoticeData {
     private String content;
     private String fileUrl;
     private String created;
+    private int toGrade;
 
-    private String toGrade;
-
-    public NoticeData(String title, String content, String fileUrl, String created, String toGrade) {
+    public NoticeData(String title, String content, String fileUrl, String created, int toGrade) {
         this.title = title;
         this.content = content;
         this.fileUrl = fileUrl;
@@ -25,7 +24,7 @@ public class NoticeData {
     public String getTime() {
         return created;
     }
-    public String getToGrade() {
+    public int getToGrade() {
         return toGrade;
     }
 }

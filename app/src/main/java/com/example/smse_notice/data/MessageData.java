@@ -8,9 +8,12 @@ public class MessageData {
         @SerializedName("content")
         private String content;
 
-    public MessageData(String title, String content) {
+        private String toGrade;
+
+    public MessageData(String title, String content, String toGrade) {
         this.title = title;
         this.content = content;
+        this.toGrade = toGrade;
     }
 
 }
