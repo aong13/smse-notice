@@ -31,6 +31,6 @@ public interface ServiceApi {
     @POST("/chat/{community-id}")
     Call<MessageResponse> chat(@Path("community-id") int communityId, @Header("Authorization") String token, @Body MessageData data);
     @GET("/chat/{community-id}")
-    Call<List<NoticeData>> getNotice();
+    Call<List<NoticeData>> getNotice(@Path("community-id") int communityId, @Header("Authorization") String token);
 
 }
