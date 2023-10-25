@@ -6,11 +6,14 @@ public class NoticeData {
     private String fileUrl;
     private String created;
 
-    public NoticeData(String title, String content, String fileUrl, String created) {
+    private String toGrade;
+
+    public NoticeData(String title, String content, String fileUrl, String created, String toGrade) {
         this.title = title;
         this.content = content;
         this.fileUrl = fileUrl;
         this.created = created;
+        this.toGrade = toGrade;
     }
 
     public String getName() {
@@ -21,5 +24,8 @@ public class NoticeData {
     }
     public String getTime() {
         return created;
+    }
+    public String getToGrade() {
+        return toGrade;
     }
 }

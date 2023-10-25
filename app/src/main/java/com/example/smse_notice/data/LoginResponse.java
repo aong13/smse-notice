@@ -4,17 +4,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
 
-    @SerializedName("userId")
-    private String userId;
+    @SerializedName("status")
+    private String status;
 
-    @SerializedName("loginId")
-    private String loginId;
+    @SerializedName("code")
+    private String code;
 
-    public String getUserId() {
-        return userId;
+    @SerializedName("message")
+    private String message;
+
+    public String getStatus() {
+        return status;
     }
-    public String getLoginId() {
-        return loginId;
+    public String getCode() {
+        return code;
     }
-
+    public String getMessage() {
+        return message;
+    }
 }

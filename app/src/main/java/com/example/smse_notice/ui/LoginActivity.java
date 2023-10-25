@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //로그인 버튼 클릭 이벤트 처리
         loginBtn.setOnClickListener(view -> {
-//            attemptLogin(); //테스트를 위해 주석처리
+            attemptLogin(); //테스트를 위해 주석처리
         });
     }
 
@@ -74,17 +74,12 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.e("서버응답코드", String.valueOf(response.code()));
                 Log.e("헤더", String.valueOf(response.headers()));
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse != null) {
-                        String responseLoginId = loginResponse.getLoginId();
-                        //로그 확인
-                        Log.e("응답값",responseLoginId);
-                        Log.e("입력값", loginId.getText().toString());
-                        if (loginId.getText().toString().equals(responseLoginId)) {
-
+                        String status = loginResponse.getStatus();
+                        if (status.equals("success")) {
                             // 로그인 성공 후 토큰을 SharedPreferences에 저장
                             String authToken = null;
                             String receivedToken = String.valueOf(response.headers().get("Authorization"));
@@ -94,8 +89,8 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("authToken", authToken);
                                 editor.apply();
+                                Log.e("토큰", "저장됨 : " + authToken);
                             }
-
 
                             // UserDataSingleton에 유저 정보를 저장
                             requestUserInfo();
@@ -104,17 +99,17 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
-
-                            Toast.makeText(LoginActivity.this, responseLoginId + " 로그인 성공!야여여", Toast.LENGTH_SHORT).show();
+                            Log.e("로그인 여부", status + "/code : " + String.valueOf(response.code()));
                         } else {
                             // 로그인 실패 처리
+                            Log.e("로그인 여부", status + "/code : " + String.valueOf(response.code()));
                         }
                     } else {
-                        // 응답 바디가 null인 경우 처리
+                        // 응답 바디가 null
                         Toast.makeText(LoginActivity.this, "로그인 응답이 유효하지 않습니다.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    // 응답이 성공적이지 않은 경우 처리
+                    // 응답이 성공적이지 않음
                     Toast.makeText(LoginActivity.this, "서버 에러: " + response.code(), Toast.LENGTH_SHORT).show();
                     Log.e("로그인 에러", "서버 에러: " + response.code());
                 }
